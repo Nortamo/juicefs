@@ -37,11 +37,11 @@ import (
 )
 
 func checkMountpoint(name, mp, logPath string, background bool) {
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 400; i++ {
 		time.Sleep(time.Millisecond * 500)
 		st, err := os.Stat(mp)
 		if err == nil {
-			if sys, ok := st.Sys().(*syscall.Stat_t); ok && sys.Ino == uint64(meta.RootInode) {
+			if _, ok := st.Sys().(*syscall.Stat_t); ok {
 				logger.Infof("\033[92mOK\033[0m, %s is ready at %s", name, mp)
 				return
 			}
